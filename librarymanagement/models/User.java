@@ -1,15 +1,34 @@
 package com.pranjli.machinecoding.librarymanagement.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
-    int id;
+    String id;
     String name;
     int borrowedBooks;
+    List<List<String>> borrowed;
 
-    public int getId() {
+    public User(String id, String name, int borrowedBooks, List<List<String>> borrowed) {
+        this.id = id;
+        this.name = name;
+        this.borrowedBooks = borrowedBooks;
+        this.borrowed = borrowed;
+    }
+
+    public List<List<String>> getBorrowed() {
+        return borrowed;
+    }
+
+    public void setBorrowed(List<List<String>> borrowed) {
+        this.borrowed = borrowed;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -29,9 +48,10 @@ public class User {
         this.borrowedBooks = borrowedBooks;
     }
 
-    public User(int id, String name, int borrowedBooks) {
+    public User(String id) {
         this.id = id;
-        this.name = name;
-        this.borrowedBooks = borrowedBooks;
+        this.borrowedBooks = 0;
+        this.borrowed = new ArrayList<>();
     }
 }
+

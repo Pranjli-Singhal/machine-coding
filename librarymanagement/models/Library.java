@@ -16,7 +16,7 @@ public class Library {
         this.numRacks = numRacks;
         this.racks = new ArrayList<>();
         for(int i =0; i< numRacks;i++)
-            racks.add(new Rack(new HashMap<>(),i+1));
+            racks.add(new Rack(new HashMap<>(),new HashMap<>()));
     }
 
     public static Library getInstance(int id, int numRacks){

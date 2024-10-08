@@ -9,6 +9,7 @@ public enum Command {
     REMOVE_BOOK_COPY("remove_book_copy"),
     BORROW_BOOK("borrow_book"),
     BORROW_BOOK_COPY("borrow_book_copy"),
+    RETURN_BOOK_COPY("return_book_copy"),
     PRINT_BORROWED("print_borrowed"),
     SEARCH("search"),
     EXIT("exit");

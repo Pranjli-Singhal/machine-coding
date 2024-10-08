@@ -34,6 +34,25 @@ public class Driver {
                         manager.remove(inp[1]);
                         break;
                     }
+                    case Command.BORROW_BOOK: {
+                        manager.borrow(inp[1],inp[2],inp[3]);
+                        break;
+                    }
+                    case Command.BORROW_BOOK_COPY: {
+                        manager.borrowCopy(inp[1],inp[2],inp[3]);
+                        break;
+                    }
+                    case Command.RETURN_BOOK_COPY: {
+                        manager.returnBook(inp[1]);
+                        break;
+                    }
+                    case Command.PRINT_BORROWED:{
+                        manager.print(inp[1]);
+                        break;
+                    }
+                    case Command.SEARCH:{
+                        manager.search(inp[1],inp[2]);
+                    }
                     case Command.EXIT:
                         break;
                 }

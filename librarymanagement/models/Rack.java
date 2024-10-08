@@ -6,29 +6,28 @@ import java.util.Map;
 import java.util.Set;
 
 public class Rack {
+
     Map<String, Book> books;
-    int id;
+    Map<String, String> copyToBook;
 
-    public void setBooks(Map<String, Book> books) {
+    public Rack(Map<String, Book> books, Map<String, String> copyToBook) {
         this.books = books;
-    }
-
-    public Rack(Map<String, Book> books, int id) {
-        this.books = books;
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.copyToBook = copyToBook;
     }
 
     public Map<String, Book> getBooks() {
         return books;
     }
 
+    public void setBooks(Map<String, Book> books) {
+        this.books = books;
+    }
 
+    public Map<String, String> getCopyToBook() {
+        return copyToBook;
+    }
+
+    public void setCopyToBook(Map<String, String> copyToBook) {
+        this.copyToBook = copyToBook;
+    }
 }
