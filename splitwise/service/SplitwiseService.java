@@ -44,60 +44,37 @@ public class SplitwiseService {
                 if (!show(inputs[1]))
                     System.out.println("No balances");
             }
-            else{
+            else {
                 int n = inputs.length;
                 int payee = users.get(inputs[1]).getId();
                 Double amt = Double.parseDouble(inputs[2]);
                 int count = Integer.parseInt(inputs[3]);
                 List<String> payer = new ArrayList<>();
-                int i =4;
+                int i = 4;
 
-                while(count-- > 0){
+                while (count-- > 0) {
                     payer.add(inputs[i]);
                     i++;
                 }
                 String expense = inputs[i];
                 i++;
                 List<String> perOrAmt = new ArrayList<>();
-                while(i < n){
+                while (i < n) {
                     perOrAmt.add(inputs[i]);
                     i++;
                 }
-                //can use strategy pattern here
-                if(expense.equals(Expense.EQUAL.toString())){
-                    for(String pay : payer){
-                        //can add user service to fetch user from
-                        int payId = users.get(pay).getId();
-                        if(payId != payee)
-                            //TODO : CONVERT 33.33 TO 33.34 FOR FIRST PAYER
-                            //amt = Double.parseDouble(decfor.format(amt));
-                            inMemoryDAO.updateBalance(payId, amt/payer.size(), payee,account);
-                    }
 
+                //using Strategy Pattern
+                if(expense.equals(Expense.EQUAL.toString())){
+                    inMemoryDAO.split(new EqualStrategy(),perOrAmt,payer, users, payee,amt,account);
                 } else if(expense.equals(Expense.EXACT.toString())){
-                    for(int i1 =0;i1< perOrAmt.size();i1++)
-                        amt-=Double.parseDouble(perOrAmt.get(i1));
-                    if(amt==0) {
-                        for(int i1 =0;i1< perOrAmt.size();i1++){
-                            String pay = payer.get(i1);
-                            int payId = users.get(pay).getId();
-                            if (payId != payee)
-                                inMemoryDAO.updateBalance(payId, Double.parseDouble(perOrAmt.get(i1)), payee, account);
-                        }
-                    }
+                    inMemoryDAO.split(new ExactStrategy(),perOrAmt,payer, users, payee,amt,account);
                 } else {
-                    int per=100;
-                    for(int i1 =0;i1< perOrAmt.size();i1++)
-                        per-=Double.parseDouble(perOrAmt.get(i1));
-                    if(per==0) {
-                        for(int i1 =0;i1< perOrAmt.size();i1++){
-                            String pay = payer.get(i1);
-                            int payId = users.get(pay).getId();
-                            if (payId != payee)
-                                inMemoryDAO.updateBalance(payId, (Double.parseDouble(perOrAmt.get(i1))/100)*amt, payee, account);
-                        }
-                    }
+                    inMemoryDAO.split(new PercentStrategy(),perOrAmt,payer, users, payee,amt,account);
                 }
+
+                //can use strategy pattern here
+
 
             }
         }}
