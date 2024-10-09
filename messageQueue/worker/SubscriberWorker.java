@@ -43,8 +43,10 @@ public class SubscriberWorker implements Runnable {
         }
 
     }
-    public void wakeUp(){
-
-            subscriber.notify();}
+    public void wakeUp() {
+        synchronized (subscriber) {
+            subscriber.notify();
+        }
+    }
 
 }
