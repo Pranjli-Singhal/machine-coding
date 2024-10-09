@@ -13,6 +13,7 @@ public class Driver {
         Subscriber sub2 = new Subscriber("sub2");
         Subscriber sub3 = new Subscriber("sub3");
 
+        //there should be a queue with multiple topics
         pub1.createTopic("topic1");
         pub1.createTopic("topic2");
 

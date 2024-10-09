@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Subscriber {
+   //offset should be thread safe since it can be change while consuming msg/setting offset
     int offset =0;
 
     public int getOffset() {
