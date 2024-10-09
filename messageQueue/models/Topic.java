@@ -11,6 +11,10 @@ public class Topic {
         this.id = id;
     }
 
+    public synchronized void addMessage( String m){
+        msg.add(m);
+    }
+
     List<Subscriber> subscribers = new ArrayList<>();
 
     public String getId() {

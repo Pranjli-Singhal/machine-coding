@@ -4,42 +4,38 @@ import com.pranjli.machinecoding.messageQueue.dao.InMemoryDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Subscriber {
-   //offset should be thread safe since it can be change while consuming msg/setting offset
-    int offset =0;
+    public List<Topic> getSubscribedTopics() {
+        return subscribedTopics;
+    }
 
-    public int getOffset() {
+    //offset should be thread safe since it can be change while consuming msg/setting offset
+    AtomicInteger offset ;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public AtomicInteger getOffset() {
         return offset;
     }
 
-    public void setOffset(int offset) {
+    public void setOffset(AtomicInteger offset) {
         this.offset = offset;
     }
 
     public Subscriber(String id) {
         this.id = id;
+        this.offset = new AtomicInteger(0);
     }
 
     List<Topic> subscribedTopics = new ArrayList<>();
     String id;
 
-    public void subscribe(String topic){
-        Topic t = InMemoryDAO.getTopic(topic);
-        subscribedTopics.add(t);
-        t.getSubscribers().add(this);
-        InMemoryDAO.addSubscriber(topic,id);
-    }
-
-    public void readMessage(Topic t){
-        if(offset!=0){
-            List<String> msg = t.getMessage();
-            for(int i =offset-1; i< msg.size();i++){
-                String m = msg.get(i);
-                System.out.println("Msg "+m +" read by subscriber "+id);
-            }
-        }
-        else
-        System.out.println("Msg "+t.getMessage().getLast() +" read by subscriber "+id);
-    }
 }

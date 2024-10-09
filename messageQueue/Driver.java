@@ -1,28 +1,26 @@
 package com.pranjli.machinecoding.messageQueue;
 
-import com.pranjli.machinecoding.messageQueue.models.Publisher;
+import com.pranjli.machinecoding.messageQueue.models.Queue;
 import com.pranjli.machinecoding.messageQueue.models.Subscriber;
-import com.pranjli.machinecoding.messageQueue.service.QueueService;
 
 public class Driver {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
 
-        Publisher pub1 = new Publisher("pub1");
+        Queue queue = new Queue();
+        queue.createTopic("topic1");
+        queue.createTopic("topic2");
+
         Subscriber sub1 = new Subscriber("sub1");
         Subscriber sub2 = new Subscriber("sub2");
         Subscriber sub3 = new Subscriber("sub3");
+        queue.subscribe(sub1,"topic1");
+        queue.subscribe(sub2,"topic1");
+        queue.publish("topic1", "Msg1");
+        Thread.sleep(15000);
 
-        //there should be a queue with multiple topics
-        pub1.createTopic("topic1");
-        pub1.createTopic("topic2");
-
-        pub1.publish("topic1", "Msg1");
-
-        sub1.subscribe("topic1");
-        pub1.publish("topic1","Msg2");
-
-        sub1.setOffset(1);
-        pub1.publish("topic1","Msg3");
+        queue.publish("topic1","Msg2");
+        queue.publish("topic1","Msg3");
+        queue.setOffset(sub1,0,"topic1");
     }
 }
