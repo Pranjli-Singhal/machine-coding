@@ -2,10 +2,27 @@ package com.pranjli.machinecoding.threadpool.workers;
 
 import com.pranjli.machinecoding.threadpool.models.Task;
 
-public class ThreadWorker {
-    public synchronized void run(Task t) throws InterruptedException {
-        if(t.getId()%2==0)
-        Thread.sleep(10000);
-        t.run();
+import java.util.concurrent.BlockingQueue;
+
+public class ThreadWorker extends Thread{
+
+    BlockingQueue<Task> queue;
+    Boolean shutDown;
+
+    public ThreadWorker(BlockingQueue<Task> queue,Boolean shutDown) {
+        this.queue = queue;
+        this.shutDown = shutDown;
+    }
+
+    public void run()  {
+                while (!shutDown || !queue.isEmpty()) {
+                    try {
+
+                       Task t= queue.take();
+                       t.run();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
     }
 }
